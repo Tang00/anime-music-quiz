@@ -8,12 +8,11 @@ export default function HomeScreen({ navigation }) {
         try {
             //get data for quiz
             let response = await fetch(
-                'https://api.jikan.moe/v3/top/anime/1'
+                'https://api.jikan.moe/v3/top/anime/1/tv'
             );
             let json = await response.json();
-
             //start quiz
-            navigation.navigate('Choice', { json: json.top })
+            navigation.navigate('Choice', { anime: json.top })
         }
         catch (error) {
             console.error(error);
