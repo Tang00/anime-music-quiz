@@ -1,28 +1,29 @@
 import React from 'react';
 import {Button, View, Text} from 'react-native';
 
+import { useSelector, useDispatch } from 'react-redux';
+
+import { fetchAnime } from '../actions/anime';
+
 
 export default function HomeScreen({ navigation }) {
 
+    const { anime, pending, error } = useSelector((state) => ({ anime: state.animelist, pending: state.pending, error: state.error }));
+    const dispatch = useDispatch();
+
     const handleStart = async () => {
-        try {
-            //get data for quiz
-            let response = await fetch(
-                'https://api.jikan.moe/v3/top/anime/1/tv'
-            );
-            let json = await response.json();
-            //start quiz
-            navigation.navigate('Choice', { anime: json.top })
-        }
-        catch (error) {
-            console.error(error);
+        await dispatch(fetchAnime());
+        console.log(anime);
+        //start quiz
+        if (pending === false) {
+            navigation.navigate('Choice');
         }
     }
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Anime Music Quiz</Text>
-        <Button title="Start Quiz" onPress={handleStart} />
+        <Button title="Start Quiz" onPress={() => handleStart()} />
       </View>
     );
 }
