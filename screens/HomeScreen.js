@@ -13,7 +13,6 @@ export default function HomeScreen({ navigation }) {
 
     const handleStart = async () => {
         await dispatch(fetchAnime());
-        console.log(anime);
         //start quiz
         if (pending === false) {
             navigation.navigate('Choice');

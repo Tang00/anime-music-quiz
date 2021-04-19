@@ -12,16 +12,18 @@ import { YOUTUBE_KEY } from '../constants/api';
 /*
 TODO:
 Make global state for results
-Make multiple choice functionality
-Block Screen until choice is made
-change screen to display correctness when choice is made
 Pop show from animelist
 rerender with new question
+
+fix autoplay
+Hide video in question screen or play audio only
 
 make a better randomize function
 
 Make offline / top 200 mode / most popular 200 mode
 make user list mode
+
+Make UI look nice
 */
 
 
@@ -57,7 +59,7 @@ export default function ChoiceScreen({ navigation }) {
 
     const checkBoxPressHandler = (index) => {
         //Process selection and move to selection screen
-        navigation.navigate("Selection");
+        navigation.navigate("Selection", {video: video, anime: animeList[0].title, user_choice: choices[index], correct: animeList[0].title === choices[index]});
     };
 
     const playerIsReady = () => {
