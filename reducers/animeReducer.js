@@ -3,7 +3,7 @@ import { FETCH_ANIME_PENDING, FETCH_ANIME_SUCCESS, FETCH_ANIME_ERROR } from '../
 const initialState = {
     pending: false,
     animelist: null,
-    error: null
+    error: null,
 };
 
 const animeReducer = (state = initialState, action) => {
@@ -31,6 +31,3 @@ const animeReducer = (state = initialState, action) => {
 }
 
 export default animeReducer;
-export const getAnimeList = state => state.animelist;
-export const getAnimePending = state => state.pending;
-export const getAnimeError = state => state.error;

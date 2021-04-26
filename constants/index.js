@@ -1,4 +1,7 @@
 export const FETCH_ANIME_PENDING = 'FETCH_ANIME_PENDING';
 export const FETCH_ANIME_SUCCESS = 'FETCH_ANIME_SUCCESS';
 export const FETCH_ANIME_ERROR = 'FETCH_ANIME_ERROR';
+export const START_QUIZ = 'START_QUIZ';
+export const ADD_POINT = 'ADD_POINT';
+export const ADD_CHOICE = 'ADD_CHOICE';
 
