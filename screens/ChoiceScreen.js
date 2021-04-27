@@ -1,5 +1,5 @@
-import React, { useEffect, useState }from 'react';
-import { Button, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState }from 'react';
+import { Button, Text, View, useWindowDimensions } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -34,12 +34,19 @@ export default function ChoiceScreen({ navigation }) {
 
     //redux state hook
     const animeList = useSelector((state) => state.animeReducer.animelist);
+
     //multiple choice options
     const [choices, setChoices] = useState([]);
+
     //video_id for youtube link
     const [video, setVideo] = useState("");
     //youtube player autoplay
-    const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(false);
+    
+    //calculate player size
+    const window = useWindowDimensions();
+    const width = window.width;
+    const height = width * (9/16);
 
     const dispatch = useDispatch();
 
@@ -73,21 +80,36 @@ export default function ChoiceScreen({ navigation }) {
         if (correct) {
             dispatch(addPoint());
         }
+        setPlaying(false);
         navigation.navigate('Selection', {video: video, anime: animeList[0].title, user_choice: choices[index], correct: correct});
     };
 
-    const playerIsReady = () => {
+    /*
+    const playerIsReady = useCallback (() => {
+        console.log("player is ready");
         setPlaying(true);
-    }
+    }, []);
+    */
+
+    const stateChange = useCallback((value) => {
+        console.log(value);
+        if (value === "ended") {
+            setPlaying(false);
+        }
+    }, []);
+
+    const playVideo = useCallback(() => {
+        setPlaying((prev) => !prev);
+    }, []);
 
     return (
         <View>
             <View>
                 <YoutubePlayer
-                    height={300}
+                    height={height}
                     play={playing}
-                    onReady={playerIsReady}
-                    //onChangeState={}
+                    //onReady={playerIsReady}
+                    onChangeState={stateChange}
                     videoId={video}
                     initialPlayerParams={{
                         controls:false,
@@ -101,7 +123,19 @@ export default function ChoiceScreen({ navigation }) {
                     }}
                 />
             </View>
+            <View style={{position:'absolute',
+                    left: 0,
+                    top:0,
+                    opacity:1,
+                    height: height,
+                    width: width,
+                    backgroundColor:'white',
+                    alignItems: 'center'}}>
+                    <Text>Guess the opening theme!</Text>
+                    <Button title={playing ? "PAUSE" : "PLAY"} onPress={() => {playVideo()}} />
+            </View>
             <View>
+                
                 {choices.map((answer, index) => (
                     <Button key={index} title={answer} onPress={() => {checkBoxPressHandler(index)}} />
                 ))}

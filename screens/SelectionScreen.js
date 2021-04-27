@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Button, View, Text} from 'react-native';
 
 import { useSelector } from 'react-redux';
@@ -16,16 +16,21 @@ make UI look nice
 
 export default function SelectionScreen({ route, navigation }) {
 
+  const [playing, setPlaying] = useState(true);
+
   const { video, anime, user_choice, correct } = route.params;
 
-  const { quiz, score, choices } = useSelector((state) => ({ quiz: state.quizReducer.quiz, score: state.quizReducer.score, choices: state.quizReducer.choices }));
+  const goToResults = () => {
+    setPlaying(false);
+    navigation.navigate('Result');
+  }
 
   return (
     <View>
       <View>
         <YoutubePlayer
           height={300}
-          play={true}
+          play={playing}
           //onReady={}
           //onChangeState={}
           videoId={video}
@@ -41,17 +46,12 @@ export default function SelectionScreen({ route, navigation }) {
           }}
         />
       </View>
-      <View>
+      <View >
         <Text>{correct ? 'CORRECT' : 'INCORRECT'}</Text>
         <Text>ANSWER: {anime}</Text>
         <Text>YOUR CHOICE: {user_choice}</Text>
         <Button title='Next' onPress={() => navigation.pop()} />
-        <Button title='End' onPress={() => navigation.navigate('Result')} />
-        <Text>{quiz}</Text>
-        <Text>{score}</Text>
-        {choices.map((choice, index) => (
-          <Text key={index}>{choice}</Text>
-        ))}
+        <Button title='End' onPress={() => goToResults()} />
       </View>
     </View>
   );
