@@ -2,14 +2,13 @@ import React, { useCallback, useEffect, useState }from 'react';
 import { Button, Text, View, useWindowDimensions } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
-
 import { useSelector, useDispatch } from 'react-redux';
 
 import YoutubePlayer from 'react-native-youtube-iframe';
 
-import { randomize } from '../Random';
+import useTimer from '../scripts/timer';
+import { randomize } from '../scripts/random';
 import { YOUTUBE_KEY } from '../constants/api';
-
 import { addChoice, addPoint } from '../actions/quiz';
 
 /*
@@ -34,6 +33,7 @@ export default function ChoiceScreen({ navigation }) {
 
     //redux state hook
     const animeList = useSelector((state) => state.animeReducer.animelist);
+    const dispatch = useDispatch();
 
     //multiple choice options
     const [choices, setChoices] = useState([]);
@@ -42,14 +42,16 @@ export default function ChoiceScreen({ navigation }) {
     const [video, setVideo] = useState("");
     //youtube player autoplay
     const [playing, setPlaying] = useState(false);
-    
+
     //calculate player size
     const window = useWindowDimensions();
     const width = window.width;
     const height = width * (9/16);
 
-    const dispatch = useDispatch();
+    //countdown timers
+    const { timer, isActive, handleStart } = useTimer(3);
 
+    
     useFocusEffect(
         
         React.useCallback(() => {
@@ -69,9 +71,12 @@ export default function ChoiceScreen({ navigation }) {
         .then((response) => response.json())
         .then((json) => setVideo(json.items[0].id.videoId))
         .catch((error) => console.error(error));
+
+        handleStart();
     
     }, [])
     );
+
 
     const checkBoxPressHandler = (index) => {
         //Process selection and move to selection screen
@@ -84,32 +89,23 @@ export default function ChoiceScreen({ navigation }) {
         navigation.navigate('Selection', {video: video, anime: animeList[0].title, user_choice: choices[index], correct: correct});
     };
 
-    /*
-    const playerIsReady = useCallback (() => {
-        console.log("player is ready");
-        setPlaying(true);
-    }, []);
-    */
 
-    const stateChange = useCallback((value) => {
-        console.log(value);
-        if (value === "ended") {
-            setPlaying(false);
+    const renderCountdown = () => {
+        if (isActive) {
+            return <Text>{timer}</Text>
         }
-    }, []);
+        else {
+            return <Text>Guess the opening theme!</Text>
+        }
+    }
 
-    const playVideo = useCallback(() => {
-        setPlaying((prev) => !prev);
-    }, []);
 
     return (
         <View>
             <View>
                 <YoutubePlayer
                     height={height}
-                    play={playing}
-                    //onReady={playerIsReady}
-                    onChangeState={stateChange}
+                    play={!isActive}
                     videoId={video}
                     initialPlayerParams={{
                         controls:false,
@@ -126,16 +122,14 @@ export default function ChoiceScreen({ navigation }) {
             <View style={{position:'absolute',
                     left: 0,
                     top:0,
-                    opacity:1,
+                    opacity:.9,
                     height: height,
                     width: width,
                     backgroundColor:'white',
                     alignItems: 'center'}}>
-                    <Text>Guess the opening theme!</Text>
-                    <Button title={playing ? "PAUSE" : "PLAY"} onPress={() => {playVideo()}} />
+                    {renderCountdown()}
             </View>
             <View>
-                
                 {choices.map((answer, index) => (
                     <Button key={index} title={answer} onPress={() => {checkBoxPressHandler(index)}} />
                 ))}
