@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState }from 'react';
-import { Button, Text, View, useWindowDimensions } from 'react-native';
+import React, { useState }from 'react';
+import { StyleSheet, Button, Text, View, useWindowDimensions } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,6 +10,8 @@ import useTimer from '../scripts/timer';
 import { randomize } from '../scripts/random';
 import { YOUTUBE_KEY } from '../constants/api';
 import { addChoice, addPoint } from '../actions/quiz';
+
+import tally from '../components/tally';
 
 /*
 TODO:
@@ -92,19 +94,20 @@ export default function ChoiceScreen({ navigation }) {
 
     const renderCountdown = () => {
         if (isActive) {
-            return <Text>{timer}</Text>
+            return <Text style={styles.title}>{timer}</Text>
         }
         else {
-            return <Text>Guess the opening theme!</Text>
+            return <Text style={styles.title}>Guess the opening theme!</Text>
         }
     }
 
 
     return (
-        <View>
-            <View>
+        <View style={styles.container}>
+            <View style={styles.videoPlayer}>
                 <YoutubePlayer
                     height={height}
+                    width={width}
                     play={!isActive}
                     videoId={video}
                     initialPlayerParams={{
@@ -122,14 +125,16 @@ export default function ChoiceScreen({ navigation }) {
             <View style={{position:'absolute',
                     left: 0,
                     top:0,
-                    opacity:.9,
+                    opacity:.993,
                     height: height,
                     width: width,
-                    backgroundColor:'white',
-                    alignItems: 'center'}}>
+                    backgroundColor:'#393E46',
+                    alignItems: 'center',
+                    justifyContent: 'center'}}>
+                    {tally()}
                     {renderCountdown()}
             </View>
-            <View>
+            <View style={styles.choices}>
                 {choices.map((answer, index) => (
                     <Button key={index} title={answer} onPress={() => {checkBoxPressHandler(index)}} />
                 ))}
@@ -137,3 +142,35 @@ export default function ChoiceScreen({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#393E46',
+    },
+    videoPlayer: {
+        //flex: 2,
+        alignItems: 'center'
+    },
+    choices: {
+        //flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    title: {
+        color: '#00ADB5',
+        fontSize: 30,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    text: {
+        color: '#AAD8D3',
+        fontSize: 25,
+        fontWeight: 'bold'
+    },
+    subtext: {
+        color: '#EEEEEE',
+        fontSize: 20
+    }
+  })
