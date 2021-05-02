@@ -3,6 +3,8 @@ import { StyleSheet, Button, View, Text } from 'react-native';
 
 import { useSelector } from 'react-redux';
 
+import NavButton from '../components/navbutton';
+
 
 export default function ResultScreen({ navigation }) {
 
@@ -10,16 +12,23 @@ export default function ResultScreen({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <View style={styles.navigation}>
+
+        <View style={styles.header}>
           <Text style={styles.title}>{quiz}</Text>
           <Text style={styles.text}>Your score:</Text>
           <Text style={styles.text}>{score} / {choices.length}</Text>
+        </View>
+
+        <View style={styles.choices}>
           <Text style={styles.subtext}>Your answers:</Text>
           {choices.map((choice, index) => (
             <Text style={styles.subtext} key={index}>{choice}</Text>
           ))}
-          <Button title="Start Over" onPress={() => navigation.popToTop()} />
-          </View>
+        </View>
+
+        <View style={styles.navigation}>
+          <NavButton title="Start Over" onPress={() => navigation.popToTop()} />
+        </View>
       </View>
     );
 }
@@ -29,6 +38,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#393E46',
+  },
+  header: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  choices: {
+    flex: 3,
+    //justifyContent: 'center',
   },
   navigation: {
     flex: 1,

@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchAnime } from '../actions/anime';
 import { startQuiz } from '../actions/quiz';
 
+import NavButton from '../components/navbutton';
+
 
 export default function HomeScreen({ navigation }) {
 
@@ -13,7 +15,7 @@ export default function HomeScreen({ navigation }) {
 
     const handleStart = async () => {
         await dispatch(fetchAnime());
-        dispatch(startQuiz('TOP 200'));
+        dispatch(startQuiz('Tang1\'s Anime List'));
         //start quiz
         navigation.navigate('Choice');
     }
@@ -22,7 +24,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.container}>
             <View style={styles.navigation}>
                 <Text style={styles.title}>Anime Music Quiz</Text>
-                <Button title='Start Quiz' onPress={() => handleStart()} />
+                <NavButton title='Start Quiz' onPress={() => handleStart()} />
             </View>
         </View>
     );
@@ -47,17 +49,18 @@ const styles = StyleSheet.create({
       color: '#00ADB5',
       fontSize: 30,
       fontWeight: 'bold',
-      textAlign: 'center'
+      textAlign: 'center',
+      padding: 10,
     },
     text: {
       color: '#AAD8D3',
       fontSize: 25,
       fontWeight: 'bold',
-      textAlign: 'center'
+      textAlign: 'center',
     },
     subtext: {
       color: '#EEEEEE',
       fontSize: 20,
-      textAlign: 'center'
+      textAlign: 'center',
     }
   })

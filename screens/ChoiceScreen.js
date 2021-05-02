@@ -11,7 +11,8 @@ import { randomize } from '../scripts/random';
 import { YOUTUBE_KEY } from '../constants/api';
 import { addChoice, addPoint } from '../actions/quiz';
 
-import tally from '../components/tally';
+import Tally from '../components/tally';
+import ChoiceButton from '../components/choicebutton';
 
 /*
 TODO:
@@ -80,14 +81,16 @@ export default function ChoiceScreen({ navigation }) {
     );
 
 
-    const checkBoxPressHandler = (index) => {
+    const pressHandler = (index) => {
         //Process selection and move to selection screen
+        setPlaying(false);
+
         const correct = animeList[0].title === choices[index];
         dispatch(addChoice(choices[index]));
         if (correct) {
             dispatch(addPoint());
         }
-        setPlaying(false);
+        
         navigation.navigate('Selection', {video: video, anime: animeList[0].title, user_choice: choices[index], correct: correct});
     };
 
@@ -125,18 +128,18 @@ export default function ChoiceScreen({ navigation }) {
             <View style={{position:'absolute',
                     left: 0,
                     top:0,
-                    opacity:.993,
+                    opacity:.99,
                     height: height,
                     width: width,
                     backgroundColor:'#393E46',
                     alignItems: 'center',
                     justifyContent: 'center'}}>
-                    {tally()}
+                    <Tally />
                     {renderCountdown()}
             </View>
             <View style={styles.choices}>
                 {choices.map((answer, index) => (
-                    <Button key={index} title={answer} onPress={() => {checkBoxPressHandler(index)}} />
+                    <ChoiceButton key={index} title={answer} onPress={() => {pressHandler(index)}} />
                 ))}
             </View>
         </View>

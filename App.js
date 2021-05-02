@@ -21,22 +21,35 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Home"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#393E46',
+              shadowColor: 'transparent',
+            },
+            headerTintColor: '#00ADB5',
+            headerTitleStyle: {
+              fontSize: 30,
+              fontWeight: 'bold'
+            }
+          }}
+        >
           <Stack.Screen 
             name="Home" 
-            component={HomeScreen} />
+            component={HomeScreen}
+            options={() => ({title: ''})} />
           <Stack.Screen 
             name="Choice" 
             component={ChoiceScreen} 
-            options={() => ({ gestureEnabled: false, headerLeft: null})}/>
+            options={() => ({ gestureEnabled: false, headerLeft: null, title: ''})}/>
           <Stack.Screen 
             name="Selection" 
             component={SelectionScreen} 
-            options={() => ({ gestureEnabled: false, headerLeft: null})}/>
+            options={() => ({ gestureEnabled: false, headerLeft: null, title: ''})}/>
           <Stack.Screen 
-            name="Result" 
+            name="Results" 
             component={ResultScreen}
-            options={() => ({ gestureEnabled: false, headerLeft: null })}/>
+            options={() => ({ gestureEnabled: false, headerLeft: null, title: ''})}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

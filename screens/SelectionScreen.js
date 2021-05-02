@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 
 import YoutubePlayer from 'react-native-youtube-iframe';
 
-import tally from '../components/tally';
+import Tally from '../components/tally';
+import NavButton from '../components/navbutton'
 
 
 /* 
@@ -34,7 +35,7 @@ export default function SelectionScreen({ route, navigation }) {
 
   const goToResults = () => {
     setPlaying(false);
-    navigation.navigate('Result');
+    navigation.navigate('Results');
   }
 
   return (
@@ -70,12 +71,12 @@ export default function SelectionScreen({ route, navigation }) {
         <Text style={styles.text}>{correct ? 'Correct!' : 'Incorrect!'}</Text>
         <Text style={styles.subtext}>Your choice:</Text>
         <Text style={styles.subtext}>{user_choice}</Text>
-        {tally()}
+        <Tally />
       </View>
 
       <View style={styles.navigation}>
-        <Button title='Next Question' onPress={() => navigation.pop()} />
-        <Button title='End Quiz' onPress={() => goToResults()} />
+        <NavButton title='Next Question' onPress={() => navigation.pop()} />
+        <NavButton title='End Quiz' onPress={() => goToResults()} />
       </View>
 
     </View>
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   navigation: {
     flex: 1,
     alignItems: 'center',
-    color: '#00ADB5'
+    color: '#00ADB5',
   },
   title: {
     color: '#00ADB5',
