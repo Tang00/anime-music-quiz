@@ -1,7 +1,10 @@
 # anime-music-quiz
 This is a demo application that tests anime theme knowledge. Users will play a game where they guess what show an opening theme song is from. 
-The app is built with React Native and Expo and uses the Jikan unofficial MyAnimeList API to find anime data and the YouTube Data API to search for the opening animation video. 
-The app can be demoed on an Android device (see below).
+The app is built with React Native and Expo and uses the Jikan unofficial MyAnimeList API to find anime data and the YouTube Data API to search for the opening animation video.  
+  
+The app can be demoed on an Android device (see below).  
+  
+A short video demonstration can be viewed [here](https://youtu.be/EQAevoq7r3c)
 
 
 ## Stack
