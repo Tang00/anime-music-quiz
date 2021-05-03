@@ -20,7 +20,7 @@ export default function ResultScreen({ navigation }) {
         </View>
 
         <View style={styles.choices}>
-          <Text style={styles.subtext}>Your answers:</Text>
+          <Text style={styles.text}>Your answers:</Text>
           {choices.map((choice, index) => (
             <Text style={styles.subtext} key={index}>{choice}</Text>
           ))}
@@ -32,6 +32,7 @@ export default function ResultScreen({ navigation }) {
       </View>
     );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   },
   choices: {
     flex: 3,
-    //justifyContent: 'center',
+    flexWrap: 'nowrap',
   },
   navigation: {
     flex: 1,
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
   subtext: {
     color: '#EEEEEE',
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: 5,
   },
 })

@@ -9,15 +9,6 @@ import Tally from '../components/tally';
 import NavButton from '../components/navbutton'
 
 
-/* 
-TODO:
-unmount screen when navigating to results
-or
-stop video playback when navigating to results
-
-make UI look nice
-*/
-
 export default function SelectionScreen({ route, navigation }) {
 
   const [playing, setPlaying] = useState(true);
@@ -83,6 +74,7 @@ export default function SelectionScreen({ route, navigation }) {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -90,7 +82,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#393E46',
   },
   videoPlayer: {
-    //flex: 2,
     alignItems: 'center'
   },
   header: {

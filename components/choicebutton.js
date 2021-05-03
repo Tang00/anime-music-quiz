@@ -4,7 +4,14 @@ import { Pressable, StyleSheet, View, Text } from 'react-native';
 export default function ChoiceButton(props) {
 
     return (
-        <Pressable style={styles.container} onPress={props.onPress}>
+        <Pressable 
+        style={ ({pressed}) => [
+        {
+            backgroundColor: pressed ? '#00ADB5' : '#AAD8D3',
+        },
+        styles.container,
+        ]} 
+        onPress={props.onPress}>
             <View>
                 <Text style={styles.title}>{props.title}</Text>
             </View>
@@ -14,7 +21,6 @@ export default function ChoiceButton(props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#AAD8D3',
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: 50,

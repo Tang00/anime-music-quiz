@@ -15,9 +15,9 @@ export default function Tally(props) {
     )
 }
 
+
 const styles = StyleSheet.create({
     container: {
-        //flex: 1,
         flexDirection: 'column',
         backgroundColor: '#393E46',
     },

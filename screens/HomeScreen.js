@@ -15,7 +15,7 @@ export default function HomeScreen({ navigation }) {
 
     const handleStart = async () => {
         await dispatch(fetchAnime());
-        dispatch(startQuiz('Tang1\'s Anime List'));
+        dispatch(startQuiz('MAL TOP 50'));
         //start quiz
         navigation.navigate('Choice');
     }
@@ -29,6 +29,7 @@ export default function HomeScreen({ navigation }) {
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {

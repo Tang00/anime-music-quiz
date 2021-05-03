@@ -14,23 +14,6 @@ import { addChoice, addPoint } from '../actions/quiz';
 import Tally from '../components/tally';
 import ChoiceButton from '../components/choicebutton';
 
-/*
-TODO:
-Make global state for results
-Pop show from animelist
-rerender with new question
-
-fix autoplay
-Hide video in question screen or play audio only
-
-make a better randomize function
-
-Make offline / top 200 mode / most popular 200 mode
-make user list mode
-
-Make UI look nice
-*/
-
 
 export default function ChoiceScreen({ navigation }) {
 
@@ -58,26 +41,26 @@ export default function ChoiceScreen({ navigation }) {
     useFocusEffect(
         
         React.useCallback(() => {
-        animeList.sort(randomize);
+            animeList.sort(randomize);
 
-        let c = [animeList[0].title, animeList[1].title, animeList[2].title, animeList[3].title, animeList[4].title, animeList[5].title, animeList[6].title, animeList[7].title];
-        c.sort(randomize);
-        setChoices(c);
+            let c = [animeList[0].title, animeList[1].title, animeList[2].title, animeList[3].title, animeList[4].title, animeList[5].title, animeList[6].title, animeList[7].title];
+            c.sort(randomize);
+            setChoices(c);
 
-        //format search string for Youtube API request
-        const query = encodeURI(animeList[0].title + ' op');
-        const key = YOUTUBE_KEY;
+            //format search string for Youtube API request
+            const query = encodeURI(animeList[0].title + ' op');
+            const key = YOUTUBE_KEY;
 
-        fetch (
+            fetch (
             'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q='+query+'&type=video&videoDuration=short&key='+key
-        )
-        .then((response) => response.json())
-        .then((json) => setVideo(json.items[0].id.videoId))
-        .catch((error) => console.error(error));
+            )
+            .then((response) => response.json())
+            .then((json) => setVideo(json.items[0].id.videoId))
+            .catch((error) => console.error(error));
 
         handleStart();
     
-    }, [])
+        }, [])
     );
 
 
@@ -128,7 +111,7 @@ export default function ChoiceScreen({ navigation }) {
             <View style={{position:'absolute',
                     left: 0,
                     top:0,
-                    opacity:.99,
+                    opacity:.992,
                     height: height,
                     width: width,
                     backgroundColor:'#393E46',
@@ -146,6 +129,7 @@ export default function ChoiceScreen({ navigation }) {
     )
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -153,11 +137,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#393E46',
     },
     videoPlayer: {
-        //flex: 2,
         alignItems: 'center'
     },
     choices: {
-        //flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },

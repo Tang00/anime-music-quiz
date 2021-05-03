@@ -1,10 +1,18 @@
 import React from 'react';
 import { Pressable, StyleSheet, View, Text } from 'react-native';
 
+
 export default function NavButton(props) {
 
     return (
-        <Pressable style={styles.container} onPress={props.onPress}>
+        <Pressable 
+        style={ ({pressed}) => [
+        {
+            backgroundColor: pressed ? '#AAD8D3' : '#00ADB5',
+        },
+        styles.container,
+        ]} 
+        onPress={props.onPress}>
             <View>
                 <Text style={styles.title}>{props.title}</Text>
             </View>
@@ -12,9 +20,9 @@ export default function NavButton(props) {
     )
 }
 
+
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#00ADB5',
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: 50,
